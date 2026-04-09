@@ -1,0 +1,16 @@
+[Unit]
+Description=NetBox Development Server
+After=network.target postgresql.service redis-server.service
+Wants=postgresql.service redis-server.service
+
+[Service]
+Type=oneshot
+User=artan
+WorkingDirectory=/home/artan/netbox/netbox
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/local/bin/netbox-tmux-start.sh
+ExecStop=/usr/bin/tmux kill-session -t netbox-dev
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
